@@ -13,6 +13,30 @@ class BootReceiver : BroadcastReceiver() {
         private const val KEY_IS_ACTIVE = "is_session_active"
         private const val KEY_BLOCKED_PACKAGES = "blocked_packages"
         private const val KEY_REMAINING_MINUTES = "remaining_minutes"
+
+        fun saveActiveSession(
+            context: Context,
+            blockedPackages: List<String>,
+            remainingMinutes: Int
+        ) {
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            prefs.edit().apply {
+                putBoolean(KEY_IS_ACTIVE, true)
+                putStringSet(KEY_BLOCKED_PACKAGES, blockedPackages.toSet())
+                putInt(KEY_REMAINING_MINUTES, remainingMinutes)
+                apply()
+            }
+        }
+
+        fun clearActiveSession(context: Context) {
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            prefs.edit().apply {
+                putBoolean(KEY_IS_ACTIVE, false)
+                remove(KEY_BLOCKED_PACKAGES)
+                remove(KEY_REMAINING_MINUTES)
+                apply()
+            }
+        }
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -43,29 +67,5 @@ class BootReceiver : BroadcastReceiver() {
         }
     }
 
-    companion object SaveHelper {
-        fun saveActiveSession(
-            context: Context,
-            blockedPackages: List<String>,
-            remainingMinutes: Int
-        ) {
-            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            prefs.edit().apply {
-                putBoolean(KEY_IS_ACTIVE, true)
-                putStringSet(KEY_BLOCKED_PACKAGES, blockedPackages.toSet())
-                putInt(KEY_REMAINING_MINUTES, remainingMinutes)
-                apply()
-            }
-        }
-
-        fun clearActiveSession(context: Context) {
-            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            prefs.edit().apply {
-                putBoolean(KEY_IS_ACTIVE, false)
-                remove(KEY_BLOCKED_PACKAGES)
-                remove(KEY_REMAINING_MINUTES)
-                apply()
-            }
-        }
-    }
+    // Functions moved to the single companion object
 }
