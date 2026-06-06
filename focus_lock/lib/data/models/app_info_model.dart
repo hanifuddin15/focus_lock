@@ -1,22 +1,8 @@
-import 'package:hive/hive.dart';
-
-part 'app_info_model.g.dart';
-
-@HiveType(typeId: 1)
-class AppInfoModel extends HiveObject {
-  @HiveField(0)
+class AppInfoModel {
   final String packageName;
-
-  @HiveField(1)
   final String appName;
-
-  @HiveField(2)
   final String? category;
-
-  @HiveField(3)
   bool isBlocked;
-
-  @HiveField(4)
   bool isWhitelisted;
 
   AppInfoModel({

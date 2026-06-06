@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:focus_lock/core/constants/app_colors.dart';
 import 'package:focus_lock/core/constants/app_strings.dart';

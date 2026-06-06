@@ -1,15 +1,15 @@
 import 'package:get/get.dart';
-import 'package:focus_lock/data/local/hive_service.dart';
+import 'package:focus_lock/data/local/storage_service.dart';
 import 'package:focus_lock/data/models/app_info_model.dart';
 import 'package:focus_lock/services/platform_channel_service.dart';
 import 'package:focus_lock/services/logger_service.dart';
 
 class AppListRepository {
-  final HiveService _hive = Get.find<HiveService>();
+  final StorageService _storage = Get.find<StorageService>();
   final PlatformChannelService _platform = Get.find<PlatformChannelService>();
 
   List<AppInfoModel> getCachedApps() {
-    return _hive.getCachedApps();
+    return _storage.getCachedApps();
   }
 
   List<AppInfoModel> getBlockedApps() {
@@ -37,7 +37,7 @@ class AppListRepository {
         return newApp;
       }).toList();
 
-      await _hive.cacheApps(mergedApps);
+      await _storage.cacheApps(mergedApps);
       LoggerService.info('Fetched ${mergedApps.length} installed apps');
       return mergedApps;
     } catch (e) {
@@ -52,7 +52,7 @@ class AppListRepository {
     final app = apps.firstWhereOrNull((a) => a.packageName == packageName);
     if (app != null) {
       app.isBlocked = !app.isBlocked;
-      await _hive.updateApp(app);
+      await _storage.updateApp(app);
     }
   }
 
@@ -61,7 +61,7 @@ class AppListRepository {
     final app = apps.firstWhereOrNull((a) => a.packageName == packageName);
     if (app != null) {
       app.isBlocked = blocked;
-      await _hive.updateApp(app);
+      await _storage.updateApp(app);
     }
   }
 
@@ -73,7 +73,7 @@ class AppListRepository {
       if (app.isWhitelisted) {
         app.isBlocked = false; // Whitelist overrides block
       }
-      await _hive.updateApp(app);
+      await _storage.updateApp(app);
     }
   }
 
@@ -82,7 +82,7 @@ class AppListRepository {
     for (final app in apps) {
       if (!app.isWhitelisted) {
         app.isBlocked = blocked;
-        await _hive.updateApp(app);
+        await _storage.updateApp(app);
       }
     }
   }

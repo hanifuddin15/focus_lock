@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
-import 'package:focus_lock/data/local/hive_service.dart';
+import 'package:focus_lock/data/local/storage_service.dart';
 import 'package:focus_lock/data/models/user_settings_model.dart';
 import 'package:focus_lock/services/logger_service.dart';
 
 class SettingsRepository {
-  final HiveService _hive = Get.find<HiveService>();
+  final StorageService _storage = Get.find<StorageService>();
 
   UserSettingsModel getSettings() {
-    return _hive.getSettings();
+    return _storage.getSettings();
   }
 
   Future<void> updateSettings(UserSettingsModel settings) async {
-    await _hive.saveSettings(settings);
+    await _storage.saveSettings(settings);
     LoggerService.info('Settings updated');
   }
 

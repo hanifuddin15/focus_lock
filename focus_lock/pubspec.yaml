@@ -14,8 +14,7 @@ dependencies:
   get: ^4.6.6
 
   # Local Storage
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
+  # hive_flutter: ^1.1.0
   path_provider: ^2.1.5
 
   # Permissions
@@ -37,13 +36,14 @@ dependencies:
 
   # Icons
   cupertino_icons: ^1.0.8
+  shared_preferences: ^2.5.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  hive_generator: ^2.0.1
-  build_runner: ^2.4.14
+  # hive_generator: ^2.0.1
+  # build_runner: ^2.4.14
 
 flutter:
   uses-material-design: true

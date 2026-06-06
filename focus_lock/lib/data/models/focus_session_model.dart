@@ -1,34 +1,12 @@
-import 'package:hive/hive.dart';
-
-part 'focus_session_model.g.dart';
-
-@HiveType(typeId: 0)
-class FocusSessionModel extends HiveObject {
-  @HiveField(0)
+class FocusSessionModel {
   final String id;
-
-  @HiveField(1)
   final DateTime startTime;
-
-  @HiveField(2)
   DateTime? endTime;
-
-  @HiveField(3)
   final int durationMinutes;
-
-  @HiveField(4)
   final List<String> blockedApps;
-
-  @HiveField(5)
   bool wasCompletedFully;
-
-  @HiveField(6)
   int earlyBreakAttempts;
-
-  @HiveField(7)
   final String challengeType;
-
-  @HiveField(8)
   bool isActive;
 
   FocusSessionModel({
@@ -74,5 +52,19 @@ class FocusSessionModel extends HiveObject {
       'challengeType': challengeType,
       'isActive': isActive,
     };
+  }
+
+  factory FocusSessionModel.fromMap(Map<String, dynamic> map) {
+    return FocusSessionModel(
+      id: map['id'] as String,
+      startTime: DateTime.parse(map['startTime'] as String),
+      endTime: map['endTime'] != null ? DateTime.parse(map['endTime'] as String) : null,
+      durationMinutes: map['durationMinutes'] as int,
+      blockedApps: List<String>.from(map['blockedApps'] as List),
+      wasCompletedFully: map['wasCompletedFully'] as bool? ?? false,
+      earlyBreakAttempts: map['earlyBreakAttempts'] as int? ?? 0,
+      challengeType: map['challengeType'] as String,
+      isActive: map['isActive'] as bool? ?? true,
+    );
   }
 }

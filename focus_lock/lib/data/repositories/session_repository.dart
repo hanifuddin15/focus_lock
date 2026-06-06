@@ -1,26 +1,26 @@
 import 'package:get/get.dart';
-import 'package:focus_lock/data/local/hive_service.dart';
+import 'package:focus_lock/data/local/storage_service.dart';
 import 'package:focus_lock/data/models/focus_session_model.dart';
 import 'package:focus_lock/services/logger_service.dart';
 
 class SessionRepository {
-  final HiveService _hive = Get.find<HiveService>();
+  final StorageService _storage = Get.find<StorageService>();
 
   List<FocusSessionModel> getAllSessions() {
-    return _hive.getAllSessions();
+    return _storage.getAllSessions();
   }
 
   FocusSessionModel? getActiveSession() {
-    return _hive.getActiveSession();
+    return _storage.getActiveSession();
   }
 
   Future<void> createSession(FocusSessionModel session) async {
-    await _hive.addSession(session);
+    await _storage.addSession(session);
     LoggerService.info('Session created: ${session.id}');
   }
 
   Future<void> updateSession(FocusSessionModel session) async {
-    await _hive.updateSession(session);
+    await _storage.updateSession(session);
     LoggerService.info('Session updated: ${session.id}');
   }
 
@@ -31,7 +31,7 @@ class SessionRepository {
       session.endTime = DateTime.now();
       session.wasCompletedFully = fully;
       session.isActive = false;
-      await _hive.updateSession(session);
+      await _storage.updateSession(session);
       LoggerService.info(
         'Session completed: $sessionId, fully: $fully',
       );
@@ -43,7 +43,7 @@ class SessionRepository {
     final session = sessions.firstWhereOrNull((s) => s.id == sessionId);
     if (session != null) {
       session.earlyBreakAttempts++;
-      await _hive.updateSession(session);
+      await _storage.updateSession(session);
     }
   }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:focus_lock/core/constants/app_colors.dart';
 import 'package:focus_lock/core/constants/app_strings.dart';
-import 'package:focus_lock/core/widgets/circular_timer.dart';
 import 'package:focus_lock/core/widgets/neon_button.dart';
 import 'package:focus_lock/presentation/lock/lock_controller.dart';
 import 'package:focus_lock/presentation/lock/widgets/countdown_display.dart';
@@ -97,7 +96,6 @@ class LockScreen extends GetView<LockController> {
 
     return Obx(() {
       final remaining = lockService.remainingSeconds.value;
-      final duration = Duration(seconds: remaining);
       final session = lockService.activeSession.value;
       final total = session != null ? session.durationMinutes * 60 : 1;
       final progress = 1.0 - (remaining / total).clamp(0.0, 1.0);

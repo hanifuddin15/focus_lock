@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:focus_lock/app.dart';
-import 'package:focus_lock/data/local/hive_service.dart';
+import 'package:focus_lock/data/local/storage_service.dart';
 import 'package:focus_lock/services/platform_channel_service.dart';
 import 'package:focus_lock/services/lock_service.dart';
 import 'package:focus_lock/services/notification_service.dart';
@@ -36,8 +36,8 @@ void main() async {
 }
 
 Future<void> _initServices() async {
-  // Hive (must be first — other services depend on it)
-  await Get.putAsync(() => HiveService().init());
+  // Storage (must be first — other services depend on it)
+  await Get.putAsync(() => StorageService().init());
 
   // Platform channels
   await Get.putAsync(() => PlatformChannelService().init());
